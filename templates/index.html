@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>悪質道路標識クイズ（全10問）</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="card">
+    <h1>道路標識クイズ</h1>
+
+    {% if not started %}
+        <!-- ▼ ここからタイトル画面 ▼ -->
+        <div class="title-box">
+            <p class="title-sub">ひっかけ問題（全10問）</p>
+            <p class="title-desc">
+            </p>
+            <a href="{{ url_for('start') }}" class="next-btn start-btn">クイズをスタート</a>
+        </div>
+
+    {% elif finished %}
+        <!-- ▼ 全10問終了後の結果発表（3パターン） ▼ -->
+        <h2>全問終了！お疲れ様でした！</h2>
+        <div class="score-display">{{ total }}問中 {{ score }}問 正解</div>
+        
+        {% if score == 10 %}
+            <div class="meme-box">
+                <img src="{{ url_for('static', filename='images/result_god.gif') }}" alt="神猫ミーム" class="meme-img">
+                <audio id="meme-media" src="{{ url_for('static', filename='images/result_god.mp3') }}" autoplay loop></audio>
+                <button type="button" id="sound-btn" class="sound-btn" style="display:none;" onclick="playMemeSound()">🔊 音声再生</button>
+            </div>
+            <p><strong>神</strong> You're God.</p>
+        {% elif score >= 7 %}
+            <div class="meme-box">
+                <img src="{{ url_for('static', filename='images/result_good.gif') }}" alt="優秀猫ミーム" class="meme-img">
+                <audio id="meme-media" src="{{ url_for('static', filename='images/result_good.mp3') }}" autoplay loop></audio>
+                <button type="button" id="sound-btn" class="sound-btn" style="display:none;" onclick="playMemeSound()">🔊 音声再生</button>
+            </div>
+            <p><strong>優秀</strong> いったん耐え</p>
+        {% else %}
+            <div class="meme-box">
+                <img src="{{ url_for('static', filename='images/result_bad.gif') }}" alt="餌食猫ミーム" class="meme-img">
+                <audio id="meme-media" src="{{ url_for('static', filename='images/result_bad.mp3') }}" autoplay loop></audio>
+                <button type="button" id="sound-btn" class="sound-btn" style="display:none;" onclick="playMemeSound()">🔊 音声再生</button>
+            </div>
+            <p><strong>餌食</strong> どんまい</p>
+        {% endif %}
+
+        <script>
+            window.addEventListener('DOMContentLoaded', function() {
+                const media = document.getElementById('meme-media');
+                const btn = document.getElementById('sound-btn');
+                if (media) {
+                    media.volume = 0.7;
+                    media.play().catch(function() {
+                        btn.style.display = 'inline-block';
+                    });
+                }
+            });
+
+            function playMemeSound() {
+                const media = document.getElementById('meme-media');
+                media.play();
+                document.getElementById('sound-btn').style.display = 'none';
+            }
+        </script>
+
+        <a href="{{ url_for('reset') }}" class="next-btn">最初からもう一度挑戦する</a>
+
+    {% else %}
+        <!-- ▼ クイズ出題・解説画面 ▼ -->
+        <div class="progress">第 {{ current_num }} 問 / 全 {{ total }} 問</div>
+
+        <div class="sign-box">
+            {% for img_file in quiz.images %}
+                <div class="sign-item">
+                    <img src="{{ url_for('static', filename='images/' + img_file) }}" 
+                         alt="{{ img_file }}" 
+                         class="sign-img">
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="question-text">{{ quiz.question }}</div>
+
+        {% if not result %}
+            <form action="{{ url_for('answer') }}" method="POST">
+                <input type="hidden" name="quiz_id" value="{{ quiz.id }}">
+                {% for choice in choices %}
+                    <button type="submit" name="choice" value="{{ choice }}" class="btn">{{ choice }}</button>
+                {% endfor %}
+            </form>
+        {% else %}
+            <div class="result {{ 'correct' if result.is_correct else 'incorrect' }}">
+                <h2 style="margin-top:0;">{{ '⭕ 正解！' if result.is_correct else '❌ 不正解…' }}</h2>
+
+                {% if result.is_correct %}
+                    <!-- 正解したときの猫ミーム -->
+                    <div class="meme-box">
+                        <img src="{{ url_for('static', filename='images/happy_cat.gif') }}" alt="猫ミーム" class="meme-img">
+                        <audio id="meme-media" src="{{ url_for('static', filename='images/happy_cat.mp3') }}" autoplay loop></audio>
+
+                        <button type="button" id="sound-btn" class="sound-btn" style="display:none;" onclick="playMemeSound()">
+                            音声再生
+                        </button>
+                    </div>
+
+                {% else %}
+                    <!-- 不正解だったときの猫ミーム -->
+                    <div class="meme-box">
+                        <img src="{{ url_for('static', filename='images/laughing_cat.gif') }}"
+                             alt="爆笑猫ミーム"
+                             class="meme-img">
+                        <audio id="meme-media"
+                               src="{{ url_for('static', filename='images/laughing_cat.mp3') }}"
+                               autoplay loop></audio>
+                        <button type="button" id="sound-btn" class="sound-btn" style="display:none;" onclick="playMemeSound()">
+                             音声再生
+                        </button>
+                    </div>
+                {% endif %}
+
+                <script>
+                    window.addEventListener('DOMContentLoaded', function() {
+                        const media = document.getElementById('meme-media');
+                        const btn = document.getElementById('sound-btn');
+                        if (media) {
+                            media.volume = 0.7;
+                            media.play().catch(function() {
+                                btn.style.display = 'inline-block';
+                            });
+                        }
+                    });
+
+                    function playMemeSound() {
+                        const media = document.getElementById('meme-media');
+                        media.play();
+                        document.getElementById('sound-btn').style.display = 'none';
+                    }
+                </script>
+
+                <p><strong>あなたの回答:</strong> {{ result.user_choice }}</p>
+                <p><strong>正解:</strong> {{ result.answer }}</p>
+                <div class="explanation">{{ result.explanation }}</div>
+            </div>
+            <a href="{{ url_for('index') }}" class="next-btn">
+                {{ '結果を見る' if current_num == total else '次の問題へ ➡' }}
+            </a>
+        {% endif %}
+    {% endif %}
+</div>
+
+</body>
+</html>

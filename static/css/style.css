@@ -1,0 +1,196 @@
+body {
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 0 20px;
+    text-align: center;
+    background-color: #f4f6f9;
+    color: #333;
+}
+
+.card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.progress {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* 横並び対応 */
+.sign-box {
+    padding: 20px;
+    margin: 15px 0;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    background: #fafafa;
+    min-height: 160px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+}
+
+.sign-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sign-img {
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: contain;
+}
+
+.img-placeholder {
+    color: #888;
+    font-size: 0.8rem;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+}
+
+.question-text {
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: left;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    font-size: 1rem;
+    text-align: left;
+    cursor: pointer;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fff;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    background: #eef5ff;
+    border-color: #007bff;
+}
+
+.result {
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    text-align: left;
+    line-height: 1.6;
+}
+
+.correct {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.incorrect {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.explanation {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 0.95rem;
+}
+
+.next-btn {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    background: #007bff;
+    color: white;
+    border: none;
+    margin-top: 20px;
+    padding: 14px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.next-btn:hover {
+    background: #0056b3;
+}
+
+.score-display {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #007bff;
+    margin: 20px 0;
+}
+
+.meme-box {
+    text-align: center;
+    margin: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.meme-img {
+    max-width: 240px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2)
+}
+
+.sound-btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #dc3545;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.sound-btn:hover {
+    background-color: #b02a37;
+}
+
+/* タイトル画面用 */
+.title-box {
+    padding: 20px 10px;
+}
+
+.title-sub {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #dc3545;
+    margin-bottom: 15px;
+}
+
+.title-desc {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.start-btn {
+    font-size: 1.2rem;
+    padding: 16px;
+}
